@@ -3,7 +3,7 @@ const { Firestore } = require('@google-cloud/firestore');
 const getPredictHistory = async () => {
   const db = new Firestore();
 
-  const predictCollection = db.collection('prediction');
+  const predictCollection = db.collection('predictions');
 
   try {
     const snapshot = await predictCollection.get();
