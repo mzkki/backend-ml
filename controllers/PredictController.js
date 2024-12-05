@@ -23,7 +23,7 @@ const predict = async (req, res, next) => {
     const id = crypto.randomUUID()
     const createdAt = new Date().toISOString()
 
-    await storeData(id, { result, suggestion, createdAt })
+    await storeData(id, { id, result, suggestion, createdAt })
 
     res.status(201).json({
       status: 'success',
