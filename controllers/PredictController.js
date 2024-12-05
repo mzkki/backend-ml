@@ -1,6 +1,7 @@
 const predictCancer = require("../services/inferenceService");
 const fs = require('fs');
-const crypto = require('crypto')
+const crypto = require('crypto');
+const storeData = require("../services/storeData");
 
 const predict = async (req, res, next) => {
   try {
@@ -15,17 +16,22 @@ const predict = async (req, res, next) => {
 
     fs.writeFileSync(filePath, req.file.buffer);
     const model = req.app.locals.model;
-    const { result, suggestion } = await predictCancer(model, fs.readFileSync(filePath))
+    const { result, suggestion } = await predictCancer(model, filePath)
     fs.unlinkSync(filePath);
+
+    const id = crypto.randomUUID()
+    const createdAt = new Date().toISOString()
+
+    await storeData(id, { result, suggestion, createdAt })
 
     res.status(200).json({
       status: 'success',
       message: 'Model is predicted successfully',
       data: {
-        id: crypto.randomUUID(),
+        id,
         result,
         suggestion,
-        createdAt: new Date().toISOString()
+        createdAt: createdAt
       }
     })
   } catch (e) {

@@ -1,25 +1,29 @@
 const tf = require("@tensorflow/tfjs-node");
+const fs = require("fs");
 
-const predictCancer = async (model, imageBuffer) => {
-  // Decode the image buffer into a tensor
-  const tensor = tf.node
-    .decodeImage(imageBuffer) // Automatically detects JPEG/PNG
-    .resizeNearestNeighbor([224, 224]) // Resize to match model input
-    .expandDims()
-    .toFloat()
+const predictCancer = async (model, filePath) => {
+  try {
+    const imageBuffer = fs.readFileSync(filePath);
 
-  // Perform the prediction
-  const prediction = model.predict(tensor);
-  const probabilities = await prediction.data();
-  console.log(probabilities);
-  const result = probabilities[0] > 0.5 ? "Cancer" : "Non-cancer";
+    const tensor = tf.node
+      .decodeImage(imageBuffer)
+      .resizeNearestNeighbor([224, 224])
+      .expandDims()
+      .toFloat()
 
-  const suggestion = result === 'Cancer' ? 'Segera periksa ke dokter!' : 'Penyakit kanker tidak terdeteksi.';
+    const prediction = model.predict(tensor);
+    const probabilities = await prediction.data();
+    const result = probabilities[0] > 0.5 ? "Cancer" : "Non-cancer";
 
-  return {
-    result,
-    suggestion
-  };
+    const suggestion = result === 'Cancer' ? 'Segera periksa ke dokter!' : 'Penyakit kanker tidak terdeteksi.';
+
+    return {
+      result,
+      suggestion
+    };
+  } catch (e) {
+    fs.unlinkSync(filePath);
+  }
 };
 
 module.exports = predictCancer;
