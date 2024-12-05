@@ -25,7 +25,7 @@ const predict = async (req, res, next) => {
 
     await storeData(id, { result, suggestion, createdAt })
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       message: 'Model is predicted successfully',
       data: {
