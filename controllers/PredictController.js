@@ -2,6 +2,7 @@ const predictCancer = require("../services/inferenceService");
 const fs = require('fs');
 const crypto = require('crypto');
 const storeData = require("../services/storeData");
+const getPredictHistory = require("../services/getPredictHistory");
 
 const predict = async (req, res, next) => {
   try {
@@ -39,4 +40,16 @@ const predict = async (req, res, next) => {
   }
 }
 
-module.exports = { predict };
+const histories = async (req, res, next) => {
+  try {
+    const data = await getPredictHistory();
+    res.status(200).json({
+      status: 'success',
+      data
+    })
+  } catch (e) {
+    next(e);
+  }
+}
+
+module.exports = { predict, histories };

@@ -1,6 +1,6 @@
 const express = require('express');
 const Multer = require('multer');
-const { predict } = require('../controllers/PredictController');
+const { predict, histories } = require('../controllers/PredictController');
 
 const multer = Multer({
   storage: Multer.memoryStorage(),
@@ -9,6 +9,7 @@ const multer = Multer({
 const router = express.Router();
 
 router.post('/predict', multer.single('image'), predict)
+router.get('/predict/histories', histories)
 
 
 module.exports = router;
