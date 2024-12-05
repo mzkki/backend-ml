@@ -1,0 +1,26 @@
+{
+  "name": "backend-ml",
+  "version": "1.0.0",
+  "description": "Backend Service for Serving Machine Learning Model",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mzkki/backend-ml.git"
+  },
+  "author": "mzkki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mzkki/backend-ml/issues"
+  },
+  "homepage": "https://github.com/mzkki/backend-ml#readme",
+  "dependencies": {
+    "@google-cloud/firestore": "^7.10.0",
+    "@tensorflow/tfjs-node": "^4.14.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.1",
+    "express-validator": "^7.2.0"
+  }
+}
