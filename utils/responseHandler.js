@@ -8,7 +8,7 @@ const errorHandler = (err, req, res, next) => {
   } else if (err.code == 'LIMIT_FILE_SIZE') {
     res.status(413).json({
       status: 'fail',
-      message: 'Payload contect length greater than maximum allowed: 1000000'
+      message: 'Payload content length greater than maximum allowed: 1000000'
     })
   }
   else {
