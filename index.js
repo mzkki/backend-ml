@@ -5,7 +5,7 @@ const { notFoundHandler, errorHandler } = require('./utils/responseHandler');
 const loadModel = require('./services/loadModel');
 
 const app = express();
-
+app.use(cors("*"));
 const port = process.env.PORT || 3000;
 
 async function initialize() {
